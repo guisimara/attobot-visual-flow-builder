@@ -9,38 +9,344 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppTemplatesRouteImport } from './routes/app.templates'
+import { Route as AppTeamRouteImport } from './routes/app.team'
+import { Route as AppTagsRouteImport } from './routes/app.tags'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppIntegrationsRouteImport } from './routes/app.integrations'
+import { Route as AppInboxRouteImport } from './routes/app.inbox'
+import { Route as AppFlowTemplatesRouteImport } from './routes/app.flow-templates'
+import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppContactsRouteImport } from './routes/app.contacts'
+import { Route as AppChannelsRouteImport } from './routes/app.channels'
+import { Route as AppCampaignsRouteImport } from './routes/app.campaigns'
+import { Route as AppBillingRouteImport } from './routes/app.billing'
+import { Route as AppAutomationsRouteImport } from './routes/app.automations'
+import { Route as AppContactsIdRouteImport } from './routes/app.contacts.$id'
+import { Route as AppAutomationsIdRouteImport } from './routes/app.automations.$id'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTemplatesRoute = AppTemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTagsRoute = AppTagsRouteImport.update({
+  id: '/tags',
+  path: '/tags',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIntegrationsRoute = AppIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInboxRoute = AppInboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFlowTemplatesRoute = AppFlowTemplatesRouteImport.update({
+  id: '/flow-templates',
+  path: '/flow-templates',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppContactsRoute = AppContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppChannelsRoute = AppChannelsRouteImport.update({
+  id: '/channels',
+  path: '/channels',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCampaignsRoute = AppCampaignsRouteImport.update({
+  id: '/campaigns',
+  path: '/campaigns',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingRoute = AppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAutomationsRoute = AppAutomationsRouteImport.update({
+  id: '/automations',
+  path: '/automations',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppContactsIdRoute = AppContactsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AppContactsRoute,
+} as any)
+const AppAutomationsIdRoute = AppAutomationsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AppAutomationsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/signup': typeof SignupRoute
+  '/app/automations': typeof AppAutomationsRouteWithChildren
+  '/app/billing': typeof AppBillingRoute
+  '/app/campaigns': typeof AppCampaignsRoute
+  '/app/channels': typeof AppChannelsRoute
+  '/app/contacts': typeof AppContactsRouteWithChildren
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/flow-templates': typeof AppFlowTemplatesRoute
+  '/app/inbox': typeof AppInboxRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tags': typeof AppTagsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/templates': typeof AppTemplatesRoute
+  '/app/': typeof AppIndexRoute
+  '/app/automations/$id': typeof AppAutomationsIdRoute
+  '/app/contacts/$id': typeof AppContactsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/signup': typeof SignupRoute
+  '/app/automations': typeof AppAutomationsRouteWithChildren
+  '/app/billing': typeof AppBillingRoute
+  '/app/campaigns': typeof AppCampaignsRoute
+  '/app/channels': typeof AppChannelsRoute
+  '/app/contacts': typeof AppContactsRouteWithChildren
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/flow-templates': typeof AppFlowTemplatesRoute
+  '/app/inbox': typeof AppInboxRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tags': typeof AppTagsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/templates': typeof AppTemplatesRoute
+  '/app': typeof AppIndexRoute
+  '/app/automations/$id': typeof AppAutomationsIdRoute
+  '/app/contacts/$id': typeof AppContactsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/signup': typeof SignupRoute
+  '/app/automations': typeof AppAutomationsRouteWithChildren
+  '/app/billing': typeof AppBillingRoute
+  '/app/campaigns': typeof AppCampaignsRoute
+  '/app/channels': typeof AppChannelsRoute
+  '/app/contacts': typeof AppContactsRouteWithChildren
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/flow-templates': typeof AppFlowTemplatesRoute
+  '/app/inbox': typeof AppInboxRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tags': typeof AppTagsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/templates': typeof AppTemplatesRoute
+  '/app/': typeof AppIndexRoute
+  '/app/automations/$id': typeof AppAutomationsIdRoute
+  '/app/contacts/$id': typeof AppContactsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/forgot-password'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/app/automations'
+    | '/app/billing'
+    | '/app/campaigns'
+    | '/app/channels'
+    | '/app/contacts'
+    | '/app/dashboard'
+    | '/app/flow-templates'
+    | '/app/inbox'
+    | '/app/integrations'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tags'
+    | '/app/team'
+    | '/app/templates'
+    | '/app/'
+    | '/app/automations/$id'
+    | '/app/contacts/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/app/automations'
+    | '/app/billing'
+    | '/app/campaigns'
+    | '/app/channels'
+    | '/app/contacts'
+    | '/app/dashboard'
+    | '/app/flow-templates'
+    | '/app/inbox'
+    | '/app/integrations'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tags'
+    | '/app/team'
+    | '/app/templates'
+    | '/app'
+    | '/app/automations/$id'
+    | '/app/contacts/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/forgot-password'
+    | '/login'
+    | '/onboarding'
+    | '/signup'
+    | '/app/automations'
+    | '/app/billing'
+    | '/app/campaigns'
+    | '/app/channels'
+    | '/app/contacts'
+    | '/app/dashboard'
+    | '/app/flow-templates'
+    | '/app/inbox'
+    | '/app/integrations'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tags'
+    | '/app/team'
+    | '/app/templates'
+    | '/app/'
+    | '/app/automations/$id'
+    | '/app/contacts/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
+  SignupRoute: typeof SignupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +354,198 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/templates': {
+      id: '/app/templates'
+      path: '/templates'
+      fullPath: '/app/templates'
+      preLoaderRoute: typeof AppTemplatesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/team': {
+      id: '/app/team'
+      path: '/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/tags': {
+      id: '/app/tags'
+      path: '/tags'
+      fullPath: '/app/tags'
+      preLoaderRoute: typeof AppTagsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reports': {
+      id: '/app/reports'
+      path: '/reports'
+      fullPath: '/app/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/integrations': {
+      id: '/app/integrations'
+      path: '/integrations'
+      fullPath: '/app/integrations'
+      preLoaderRoute: typeof AppIntegrationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/inbox': {
+      id: '/app/inbox'
+      path: '/inbox'
+      fullPath: '/app/inbox'
+      preLoaderRoute: typeof AppInboxRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/flow-templates': {
+      id: '/app/flow-templates'
+      path: '/flow-templates'
+      fullPath: '/app/flow-templates'
+      preLoaderRoute: typeof AppFlowTemplatesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/dashboard': {
+      id: '/app/dashboard'
+      path: '/dashboard'
+      fullPath: '/app/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/contacts': {
+      id: '/app/contacts'
+      path: '/contacts'
+      fullPath: '/app/contacts'
+      preLoaderRoute: typeof AppContactsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/channels': {
+      id: '/app/channels'
+      path: '/channels'
+      fullPath: '/app/channels'
+      preLoaderRoute: typeof AppChannelsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/campaigns': {
+      id: '/app/campaigns'
+      path: '/campaigns'
+      fullPath: '/app/campaigns'
+      preLoaderRoute: typeof AppCampaignsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/billing': {
+      id: '/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AppBillingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/automations': {
+      id: '/app/automations'
+      path: '/automations'
+      fullPath: '/app/automations'
+      preLoaderRoute: typeof AppAutomationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/contacts/$id': {
+      id: '/app/contacts/$id'
+      path: '/$id'
+      fullPath: '/app/contacts/$id'
+      preLoaderRoute: typeof AppContactsIdRouteImport
+      parentRoute: typeof AppContactsRoute
+    }
+    '/app/automations/$id': {
+      id: '/app/automations/$id'
+      path: '/$id'
+      fullPath: '/app/automations/$id'
+      preLoaderRoute: typeof AppAutomationsIdRouteImport
+      parentRoute: typeof AppAutomationsRoute
+    }
   }
 }
 
+interface AppAutomationsRouteChildren {
+  AppAutomationsIdRoute: typeof AppAutomationsIdRoute
+}
+
+const AppAutomationsRouteChildren: AppAutomationsRouteChildren = {
+  AppAutomationsIdRoute: AppAutomationsIdRoute,
+}
+
+const AppAutomationsRouteWithChildren = AppAutomationsRoute._addFileChildren(
+  AppAutomationsRouteChildren,
+)
+
+interface AppContactsRouteChildren {
+  AppContactsIdRoute: typeof AppContactsIdRoute
+}
+
+const AppContactsRouteChildren: AppContactsRouteChildren = {
+  AppContactsIdRoute: AppContactsIdRoute,
+}
+
+const AppContactsRouteWithChildren = AppContactsRoute._addFileChildren(
+  AppContactsRouteChildren,
+)
+
+interface AppRouteChildren {
+  AppAutomationsRoute: typeof AppAutomationsRouteWithChildren
+  AppBillingRoute: typeof AppBillingRoute
+  AppCampaignsRoute: typeof AppCampaignsRoute
+  AppChannelsRoute: typeof AppChannelsRoute
+  AppContactsRoute: typeof AppContactsRouteWithChildren
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppFlowTemplatesRoute: typeof AppFlowTemplatesRoute
+  AppInboxRoute: typeof AppInboxRoute
+  AppIntegrationsRoute: typeof AppIntegrationsRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppTagsRoute: typeof AppTagsRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppTemplatesRoute: typeof AppTemplatesRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAutomationsRoute: AppAutomationsRouteWithChildren,
+  AppBillingRoute: AppBillingRoute,
+  AppCampaignsRoute: AppCampaignsRoute,
+  AppChannelsRoute: AppChannelsRoute,
+  AppContactsRoute: AppContactsRouteWithChildren,
+  AppDashboardRoute: AppDashboardRoute,
+  AppFlowTemplatesRoute: AppFlowTemplatesRoute,
+  AppInboxRoute: AppInboxRoute,
+  AppIntegrationsRoute: AppIntegrationsRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppTagsRoute: AppTagsRoute,
+  AppTeamRoute: AppTeamRoute,
+  AppTemplatesRoute: AppTemplatesRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
+  SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
