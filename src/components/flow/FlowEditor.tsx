@@ -68,7 +68,7 @@ function FlowEditorInner({ flowName }: Props) {
     setSelectedId(null);
   }, [setNodes, setEdges]);
 
-  const handleNodesChange = useCallback((changes: NodeChange[]) => {
+  const handleNodesChange = useCallback((changes: NodeChange<Node<FlowNodeData>>[]) => {
     onNodesChange(changes);
     const sel = changes.find((c) => c.type === "select" && c.selected);
     if (sel && "id" in sel) setSelectedId(sel.id as string);
