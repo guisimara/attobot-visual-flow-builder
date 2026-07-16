@@ -16,10 +16,19 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppTemplatesRouteImport } from './routes/app.templates'
+import { Route as AppTeamRouteImport } from './routes/app.team'
+import { Route as AppTagsRouteImport } from './routes/app.tags'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppIntegrationsRouteImport } from './routes/app.integrations'
 import { Route as AppInboxRouteImport } from './routes/app.inbox'
 import { Route as AppFlowTemplatesRouteImport } from './routes/app.flow-templates'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
 import { Route as AppContactsRouteImport } from './routes/app.contacts'
+import { Route as AppChannelsRouteImport } from './routes/app.channels'
+import { Route as AppCampaignsRouteImport } from './routes/app.campaigns'
+import { Route as AppBillingRouteImport } from './routes/app.billing'
 import { Route as AppAutomationsRouteImport } from './routes/app.automations'
 import { Route as AppContactsIdRouteImport } from './routes/app.contacts.$id'
 import { Route as AppAutomationsIdRouteImport } from './routes/app.automations.$id'
@@ -59,6 +68,36 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppTemplatesRoute = AppTemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTagsRoute = AppTagsRouteImport.update({
+  id: '/tags',
+  path: '/tags',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIntegrationsRoute = AppIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppInboxRoute = AppInboxRouteImport.update({
   id: '/inbox',
   path: '/inbox',
@@ -77,6 +116,21 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
 const AppContactsRoute = AppContactsRouteImport.update({
   id: '/contacts',
   path: '/contacts',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppChannelsRoute = AppChannelsRouteImport.update({
+  id: '/channels',
+  path: '/channels',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCampaignsRoute = AppCampaignsRouteImport.update({
+  id: '/campaigns',
+  path: '/campaigns',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingRoute = AppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAutomationsRoute = AppAutomationsRouteImport.update({
@@ -103,10 +157,19 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/app/automations': typeof AppAutomationsRouteWithChildren
+  '/app/billing': typeof AppBillingRoute
+  '/app/campaigns': typeof AppCampaignsRoute
+  '/app/channels': typeof AppChannelsRoute
   '/app/contacts': typeof AppContactsRouteWithChildren
   '/app/dashboard': typeof AppDashboardRoute
   '/app/flow-templates': typeof AppFlowTemplatesRoute
   '/app/inbox': typeof AppInboxRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tags': typeof AppTagsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/templates': typeof AppTemplatesRoute
   '/app/': typeof AppIndexRoute
   '/app/automations/$id': typeof AppAutomationsIdRoute
   '/app/contacts/$id': typeof AppContactsIdRoute
@@ -118,10 +181,19 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/app/automations': typeof AppAutomationsRouteWithChildren
+  '/app/billing': typeof AppBillingRoute
+  '/app/campaigns': typeof AppCampaignsRoute
+  '/app/channels': typeof AppChannelsRoute
   '/app/contacts': typeof AppContactsRouteWithChildren
   '/app/dashboard': typeof AppDashboardRoute
   '/app/flow-templates': typeof AppFlowTemplatesRoute
   '/app/inbox': typeof AppInboxRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tags': typeof AppTagsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/templates': typeof AppTemplatesRoute
   '/app': typeof AppIndexRoute
   '/app/automations/$id': typeof AppAutomationsIdRoute
   '/app/contacts/$id': typeof AppContactsIdRoute
@@ -135,10 +207,19 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/app/automations': typeof AppAutomationsRouteWithChildren
+  '/app/billing': typeof AppBillingRoute
+  '/app/campaigns': typeof AppCampaignsRoute
+  '/app/channels': typeof AppChannelsRoute
   '/app/contacts': typeof AppContactsRouteWithChildren
   '/app/dashboard': typeof AppDashboardRoute
   '/app/flow-templates': typeof AppFlowTemplatesRoute
   '/app/inbox': typeof AppInboxRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tags': typeof AppTagsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/templates': typeof AppTemplatesRoute
   '/app/': typeof AppIndexRoute
   '/app/automations/$id': typeof AppAutomationsIdRoute
   '/app/contacts/$id': typeof AppContactsIdRoute
@@ -153,10 +234,19 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/signup'
     | '/app/automations'
+    | '/app/billing'
+    | '/app/campaigns'
+    | '/app/channels'
     | '/app/contacts'
     | '/app/dashboard'
     | '/app/flow-templates'
     | '/app/inbox'
+    | '/app/integrations'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tags'
+    | '/app/team'
+    | '/app/templates'
     | '/app/'
     | '/app/automations/$id'
     | '/app/contacts/$id'
@@ -168,10 +258,19 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/signup'
     | '/app/automations'
+    | '/app/billing'
+    | '/app/campaigns'
+    | '/app/channels'
     | '/app/contacts'
     | '/app/dashboard'
     | '/app/flow-templates'
     | '/app/inbox'
+    | '/app/integrations'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tags'
+    | '/app/team'
+    | '/app/templates'
     | '/app'
     | '/app/automations/$id'
     | '/app/contacts/$id'
@@ -184,10 +283,19 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/signup'
     | '/app/automations'
+    | '/app/billing'
+    | '/app/campaigns'
+    | '/app/channels'
     | '/app/contacts'
     | '/app/dashboard'
     | '/app/flow-templates'
     | '/app/inbox'
+    | '/app/integrations'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tags'
+    | '/app/team'
+    | '/app/templates'
     | '/app/'
     | '/app/automations/$id'
     | '/app/contacts/$id'
@@ -253,6 +361,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/templates': {
+      id: '/app/templates'
+      path: '/templates'
+      fullPath: '/app/templates'
+      preLoaderRoute: typeof AppTemplatesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/team': {
+      id: '/app/team'
+      path: '/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/tags': {
+      id: '/app/tags'
+      path: '/tags'
+      fullPath: '/app/tags'
+      preLoaderRoute: typeof AppTagsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reports': {
+      id: '/app/reports'
+      path: '/reports'
+      fullPath: '/app/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/integrations': {
+      id: '/app/integrations'
+      path: '/integrations'
+      fullPath: '/app/integrations'
+      preLoaderRoute: typeof AppIntegrationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/inbox': {
       id: '/app/inbox'
       path: '/inbox'
@@ -279,6 +429,27 @@ declare module '@tanstack/react-router' {
       path: '/contacts'
       fullPath: '/app/contacts'
       preLoaderRoute: typeof AppContactsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/channels': {
+      id: '/app/channels'
+      path: '/channels'
+      fullPath: '/app/channels'
+      preLoaderRoute: typeof AppChannelsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/campaigns': {
+      id: '/app/campaigns'
+      path: '/campaigns'
+      fullPath: '/app/campaigns'
+      preLoaderRoute: typeof AppCampaignsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/billing': {
+      id: '/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AppBillingRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/automations': {
@@ -331,19 +502,37 @@ const AppContactsRouteWithChildren = AppContactsRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppAutomationsRoute: typeof AppAutomationsRouteWithChildren
+  AppBillingRoute: typeof AppBillingRoute
+  AppCampaignsRoute: typeof AppCampaignsRoute
+  AppChannelsRoute: typeof AppChannelsRoute
   AppContactsRoute: typeof AppContactsRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
   AppFlowTemplatesRoute: typeof AppFlowTemplatesRoute
   AppInboxRoute: typeof AppInboxRoute
+  AppIntegrationsRoute: typeof AppIntegrationsRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppTagsRoute: typeof AppTagsRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppTemplatesRoute: typeof AppTemplatesRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppAutomationsRoute: AppAutomationsRouteWithChildren,
+  AppBillingRoute: AppBillingRoute,
+  AppCampaignsRoute: AppCampaignsRoute,
+  AppChannelsRoute: AppChannelsRoute,
   AppContactsRoute: AppContactsRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
   AppFlowTemplatesRoute: AppFlowTemplatesRoute,
   AppInboxRoute: AppInboxRoute,
+  AppIntegrationsRoute: AppIntegrationsRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppTagsRoute: AppTagsRoute,
+  AppTeamRoute: AppTeamRoute,
+  AppTemplatesRoute: AppTemplatesRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
