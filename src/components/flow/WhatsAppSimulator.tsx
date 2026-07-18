@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { tenant } from "@/data/mock";
+import { workspace } from "@/data/mock";
 
 const DEMO_MESSAGES = [
   { from: "bot", text: "Olá! Sou o assistente da Clínica Aurora 👋" },
@@ -12,18 +12,27 @@ const DEMO_MESSAGES = [
   { from: "bot", text: "Vou te transferir para nossa recepção agora." },
 ];
 
+// CSS-only WhatsApp-ish backdrop (no external CDN images).
+const wallpaper: React.CSSProperties = {
+  backgroundColor: "#0b141a",
+  backgroundImage:
+    "radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)",
+  backgroundSize: "22px 22px, 44px 44px",
+  backgroundPosition: "0 0, 11px 11px",
+};
+
 export function WhatsAppSimulator() {
   return (
-    <div className="flex h-full w-[320px] flex-col border-l bg-[#0b141a]">
+    <div className="flex h-full w-full max-w-[340px] flex-col border-l bg-[#0b141a] md:w-[320px]">
       <div className="flex items-center gap-2 border-b border-white/10 bg-[#202c33] px-3 py-2 text-white">
-        <div className="h-8 w-8 rounded-full bg-primary/40" />
-        <div className="flex-1">
-          <p className="text-sm font-medium">{tenant.name}</p>
-          <p className="text-[10px] text-white/60">online</p>
+        <div className="h-8 w-8 shrink-0 rounded-full bg-primary/40" />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-medium">{workspace.name}</p>
+          <p className="text-[10px] text-white/60">simulador · não envia mensagens reais</p>
         </div>
-        <Badge variant="outline" className="border-white/20 text-[10px] text-white/80">Simulador</Badge>
+        <Badge variant="outline" className="border-white/20 text-[10px] text-white/80">Demo</Badge>
       </div>
-      <ScrollArea className="flex-1 bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] bg-cover">
+      <ScrollArea className="flex-1" style={wallpaper}>
         <div className="space-y-2 p-3">
           {DEMO_MESSAGES.map((m, i) => (
             <div key={i} className={m.from === "bot" ? "flex justify-start" : "flex justify-end"}>

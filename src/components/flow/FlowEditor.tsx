@@ -16,7 +16,9 @@ import type { BlockType } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Save, PlayCircle, ShieldCheck, Rocket, MessageCircle } from "lucide-react";
+import {
+  Save, PlayCircle, ShieldCheck, Rocket, MessageCircle, PanelLeft, PanelRight,
+} from "lucide-react";
 import { toast } from "sonner";
 
 const nodeTypes = { attoBlock: AttoBlockNode };
@@ -29,7 +31,9 @@ function FlowEditorInner({ flowName }: Props) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<FlowNodeData>>(demoNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(demoEdges);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [showSim, setShowSim] = useState(true);
+  const [showSim, setShowSim] = useState(false);
+  const [showPalette, setShowPalette] = useState(true);
+  const [showInspector, setShowInspector] = useState(true);
   const [name, setName] = useState(flowName);
   const wrapper = useRef<HTMLDivElement>(null);
   const { screenToFlowPosition } = useReactFlow();
@@ -77,10 +81,16 @@ function FlowEditorInner({ flowName }: Props) {
   return (
     <div className="flex h-full flex-col">
       {/* Top bar */}
-      <div className="flex items-center gap-2 border-b bg-background px-4 py-2">
-        <Input value={name} onChange={(e) => setName(e.target.value)} className="h-8 max-w-xs border-transparent bg-transparent px-2 font-semibold hover:border-input" />
-        <Badge variant="secondary">Rascunho</Badge>
-        <div className="ml-auto flex items-center gap-1.5">
+      <div className="flex flex-wrap items-center gap-2 border-b bg-background px-3 py-2">
+        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setShowPalette((v) => !v)} aria-label="Alternar paleta">
+          <PanelLeft className="h-4 w-4" />
+        </Button>
+        <Input value={name} onChange={(e) => setName(e.target.value)} className="h-8 min-w-0 max-w-[180px] flex-1 border-transparent bg-transparent px-2 font-semibold hover:border-input sm:max-w-xs" />
+        <Badge variant="secondary" className="shrink-0">Rascunho</Badge>
+        <div className="ml-auto flex flex-wrap items-center gap-1.5">
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setShowInspector((v) => !v)} aria-label="Alternar inspetor">
+            <PanelRight className="h-4 w-4" />
+          </Button>
           <Button variant="outline" size="sm" onClick={() => setShowSim((v) => !v)}>
             <MessageCircle className="mr-1 h-3.5 w-3.5" /> Simulador
           </Button>
@@ -99,8 +109,11 @@ function FlowEditorInner({ flowName }: Props) {
         </div>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
-        <BlockPalette />
+      <div className="flex min-h-0 flex-1 overflow-hidden">
+        {/* Palette — collapsible on mobile, fixed on md+ */}
+        <div className={`${showPalette ? "block" : "hidden"} md:block absolute md:relative z-20 h-full bg-background md:z-auto`}>
+          <BlockPalette />
+        </div>
         <div className="relative flex-1" ref={wrapper} onDrop={onDrop} onDragOver={onDragOver}>
           <ReactFlow
             nodes={nodes} edges={edges}
@@ -113,11 +126,19 @@ function FlowEditorInner({ flowName }: Props) {
           >
             <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
             <Controls />
-            <MiniMap pannable zoomable className="!bg-card" />
+            <MiniMap pannable zoomable className="!bg-card hidden sm:block" />
           </ReactFlow>
         </div>
-        <NodeInspector node={selectedNode} onUpdate={updateNode} onDelete={deleteNode} />
-        {showSim && <WhatsAppSimulator />}
+        {selectedNode && showInspector && (
+          <div className="absolute md:relative right-0 z-20 h-full bg-background md:z-auto">
+            <NodeInspector node={selectedNode} onUpdate={updateNode} onDelete={deleteNode} />
+          </div>
+        )}
+        {showSim && (
+          <div className="absolute md:relative right-0 z-30 h-full bg-background md:z-auto">
+            <WhatsAppSimulator />
+          </div>
+        )}
       </div>
     </div>
   );
