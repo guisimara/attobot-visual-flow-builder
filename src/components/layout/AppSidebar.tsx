@@ -10,8 +10,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { AttoLogo } from "@/components/brand/AttoLogo";
-import { DemoBadge } from "@/components/layout/Badges";
-import { tenant } from "@/data/mock";
+import { WorkspaceContext } from "@/components/layout/WorkspaceContext";
 
 const groups = [
   {
@@ -62,15 +61,7 @@ export function AppSidebar() {
         <Link to="/app/dashboard" className="flex items-center gap-2 px-2 py-1.5">
           <AttoLogo showText={!collapsed} size="sm" />
         </Link>
-        {!collapsed && (
-          <div className="px-2 pb-2">
-            <div className="text-xs font-medium text-foreground">{tenant.name}</div>
-            <div className="mt-1 flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">{tenant.plan}</span>
-              <DemoBadge className="text-[10px]" />
-            </div>
-          </div>
-        )}
+        <WorkspaceContext collapsed={collapsed} />
       </SidebarHeader>
 
       <SidebarContent>

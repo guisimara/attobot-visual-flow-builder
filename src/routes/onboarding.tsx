@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AttoLogo } from "@/components/brand/AttoLogo";
-import { Check, MessageCircle, Users, Workflow } from "lucide-react";
+import { Check, MessageCircle, Users, Workflow, Contact2, PlayCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/onboarding")({ component: Onboarding });
@@ -11,7 +11,9 @@ export const Route = createFileRoute("/onboarding")({ component: Onboarding });
 const STEPS = [
   { icon: MessageCircle, title: "Conectar canal", desc: "Ligue seu WhatsApp (simulado nesta demo)." },
   { icon: Workflow, title: "Escolher um modelo", desc: "Comece por um fluxo pronto e ajuste." },
+  { icon: Contact2, title: "Importar contatos", desc: "CSV ou dados de exemplo — nesta demo já vem populado." },
   { icon: Users, title: "Convidar a equipe", desc: "Adicione atendentes e defina permissões." },
+  { icon: PlayCircle, title: "Testar no simulador", desc: "Rode um fluxo no simulador antes de publicar." },
 ];
 
 function Onboarding() {
@@ -23,7 +25,7 @@ function Onboarding() {
         <CardContent className="p-8">
           <AttoLogo size="lg" />
           <h1 className="mt-6 text-2xl font-semibold">Vamos configurar seu AttoBot</h1>
-          <p className="text-sm text-muted-foreground">Três passos rápidos. Você pode pular e voltar depois.</p>
+          <p className="text-sm text-muted-foreground">Cinco passos rápidos. Você pode pular e voltar depois.</p>
           <ol className="mt-8 space-y-3">
             {STEPS.map((s, i) => (
               <li key={s.title} className={cn("flex items-start gap-3 rounded-lg border p-4", i === step && "border-primary bg-primary/5")}>
