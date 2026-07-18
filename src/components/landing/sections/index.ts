@@ -1,0 +1,10 @@
+export { Hero } from "./Hero";
+export { ProblemSolution } from "./ProblemSolution";
+export { Features } from "./Features";
+export { EditorSection } from "./EditorSection";
+export { HumanHandoff } from "./HumanHandoff";
+export { Segments } from "./Segments";
+export { Pricing } from "./Pricing";
+export { FAQ } from "./FAQ";
+export { FinalCTA } from "./FinalCTA";
+export { ContactsReports } from "./ContactsReports";
