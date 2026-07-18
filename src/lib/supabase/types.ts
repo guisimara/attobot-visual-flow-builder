@@ -268,7 +268,12 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      bootstrap_owner_profile: {
+        Args: { p_tenant_name: string; p_full_name: string };
+        Returns: Database["public"]["Tables"]["profiles"]["Row"];
+      };
+    };
     Enums: Record<string, never>;
   };
 }
