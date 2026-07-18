@@ -1,4 +1,6 @@
-// Tipos gerados manualmente a partir de supabase/migrations/20260717000000_init_schema.sql.
+// Tipos gerados manualmente a partir de
+// supabase/migrations/20260718000000_workspace_schema.sql +
+// supabase/migrations/20260718000010_auth_bootstrap.sql.
 //
 // Se preferir gerar automaticamente no futuro (requer login na CLI):
 //   bunx supabase login
@@ -9,56 +11,66 @@ type Json = string | number | boolean | null | { [key: string]: Json | undefined
 export interface Database {
   public: {
     Tables: {
-      tenants: {
+      workspaces: {
         Row: {
           id: string;
           name: string;
-          plan: string;
-          whatsapp_number: string | null;
+          slug: string;
+          plan: "starter" | "pro" | "business" | "agency";
+          plan_label: string;
+          conversations_used: number;
+          conversations_limit: number;
           created_at: string;
         };
         Insert: {
           id?: string;
           name: string;
-          plan?: string;
-          whatsapp_number?: string | null;
+          slug: string;
+          plan?: "starter" | "pro" | "business" | "agency";
+          plan_label?: string;
+          conversations_used?: number;
+          conversations_limit?: number;
           created_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["tenants"]["Insert"]>;
+        Update: Partial<Database["public"]["Tables"]["workspaces"]["Insert"]>;
       };
-      profiles: {
+      workspace_members: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
+          user_id: string | null;
+          role: "owner" | "admin" | "agent" | "viewer";
           name: string;
           email: string;
-          role: "owner" | "admin" | "agent" | "viewer";
           avatar_url: string | null;
           status: "online" | "away" | "offline";
-          created_at: string;
+          invited_at: string;
+          joined_at: string | null;
         };
         Insert: {
-          id: string;
-          tenant_id: string;
+          id?: string;
+          workspace_id: string;
+          user_id?: string | null;
+          role?: "owner" | "admin" | "agent" | "viewer";
           name: string;
           email: string;
-          role?: "owner" | "admin" | "agent" | "viewer";
           avatar_url?: string | null;
           status?: "online" | "away" | "offline";
-          created_at?: string;
+          invited_at?: string;
+          joined_at?: string | null;
         };
-        Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;
+        Update: Partial<Database["public"]["Tables"]["workspace_members"]["Insert"]>;
       };
       tags: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           color: string;
         };
         Insert: {
           id?: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           color?: string;
         };
@@ -67,7 +79,7 @@ export interface Database {
       custom_fields: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
           key: string;
           label: string;
           type: "text" | "number" | "date" | "select" | "boolean";
@@ -75,7 +87,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
-          tenant_id: string;
+          workspace_id: string;
           key: string;
           label: string;
           type: "text" | "number" | "date" | "select" | "boolean";
@@ -86,36 +98,107 @@ export interface Database {
       flows: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           description: string | null;
           status: "draft" | "published" | "paused";
           trigger: string;
           contacts_in_flow: number;
           completion_rate: number;
-          definition: Json;
+          published_version_id: string | null;
           updated_at: string;
           created_at: string;
         };
         Insert: {
           id?: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           description?: string | null;
           status?: "draft" | "published" | "paused";
           trigger?: string;
           contacts_in_flow?: number;
           completion_rate?: number;
-          definition?: Json;
+          published_version_id?: string | null;
           updated_at?: string;
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["flows"]["Insert"]>;
       };
+      workflow_versions: {
+        Row: {
+          id: string;
+          flow_id: string;
+          version: number;
+          status: "draft" | "published";
+          nodes: Json;
+          edges: Json;
+          created_at: string;
+          published_at: string | null;
+          created_by: string | null;
+        };
+        Insert: {
+          id?: string;
+          flow_id: string;
+          version: number;
+          status?: "draft" | "published";
+          nodes?: Json;
+          edges?: Json;
+          created_at?: string;
+          published_at?: string | null;
+          created_by?: string | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["workflow_versions"]["Insert"]>;
+      };
+      workflow_executions: {
+        Row: {
+          id: string;
+          workspace_id: string;
+          flow_id: string;
+          version_id: string;
+          contact_id: string | null;
+          conversation_id: string | null;
+          status: "running" | "waiting" | "completed" | "failed" | "cancelled";
+          current_node_id: string | null;
+          started_at: string;
+          ended_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          workspace_id: string;
+          flow_id: string;
+          version_id: string;
+          contact_id?: string | null;
+          conversation_id?: string | null;
+          status?: "running" | "waiting" | "completed" | "failed" | "cancelled";
+          current_node_id?: string | null;
+          started_at?: string;
+          ended_at?: string | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["workflow_executions"]["Insert"]>;
+      };
+      node_outputs: {
+        Row: {
+          id: string;
+          execution_id: string;
+          node_id: string;
+          output: string;
+          at: string;
+          data: Json | null;
+        };
+        Insert: {
+          id?: string;
+          execution_id: string;
+          node_id: string;
+          output: string;
+          at?: string;
+          data?: Json | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["node_outputs"]["Insert"]>;
+      };
       contacts: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           phone: string;
           email: string | null;
@@ -130,7 +213,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           phone: string;
           email?: string | null;
@@ -153,7 +236,7 @@ export interface Database {
       conversations: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
           contact_id: string;
           channel: "whatsapp" | "instagram" | "webchat" | "email";
           status: "open" | "waiting" | "resolved" | "snoozed";
@@ -165,7 +248,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
-          tenant_id: string;
+          workspace_id: string;
           contact_id: string;
           channel: "whatsapp" | "instagram" | "webchat" | "email";
           status?: "open" | "waiting" | "resolved" | "snoozed";
@@ -208,7 +291,7 @@ export interface Database {
       channels: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
           type: "whatsapp" | "instagram" | "webchat" | "email";
           label: string;
           number: string | null;
@@ -216,7 +299,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
-          tenant_id: string;
+          workspace_id: string;
           type: "whatsapp" | "instagram" | "webchat" | "email";
           label: string;
           number?: string | null;
@@ -227,7 +310,7 @@ export interface Database {
       whatsapp_templates: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           category: "marketing" | "utility" | "authentication";
           language: string;
@@ -236,7 +319,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           category: "marketing" | "utility" | "authentication";
           language?: string;
@@ -248,7 +331,7 @@ export interface Database {
       campaigns: {
         Row: {
           id: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           status: "draft" | "scheduled" | "sent";
           audience_size: number;
@@ -257,7 +340,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
-          tenant_id: string;
+          workspace_id: string;
           name: string;
           status?: "draft" | "scheduled" | "sent";
           audience_size?: number;
@@ -269,9 +352,17 @@ export interface Database {
     };
     Views: Record<string, never>;
     Functions: {
-      bootstrap_owner_profile: {
-        Args: { p_tenant_name: string; p_full_name: string };
-        Returns: Database["public"]["Tables"]["profiles"]["Row"];
+      bootstrap_owner_workspace: {
+        Args: { p_workspace_name: string; p_full_name: string };
+        Returns: Database["public"]["Tables"]["workspace_members"]["Row"];
+      };
+      is_workspace_member: {
+        Args: { p_workspace_id: string };
+        Returns: boolean;
+      };
+      has_role: {
+        Args: { p_workspace_id: string; p_roles: string[] };
+        Returns: boolean;
       };
     };
     Enums: Record<string, never>;

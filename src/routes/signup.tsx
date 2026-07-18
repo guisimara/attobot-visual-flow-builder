@@ -31,7 +31,7 @@ function Signup() {
 
     // Se a confirmação por e-mail estiver ativada no projeto, o signUp não
     // devolve uma sessão ainda — o usuário precisa clicar no link do e-mail
-    // antes de conseguirmos criar o tenant/profile (que exigem auth.uid()).
+    // antes de conseguirmos criar o workspace/membro (que exigem auth.uid()).
     if (!signUpData.session) {
       setSubmitting(false);
       toast.success("Conta criada! Confirme seu e-mail para continuar.");
@@ -39,8 +39,8 @@ function Signup() {
       return;
     }
 
-    const { error: bootstrapError } = await callRpc("bootstrap_owner_profile", {
-      p_tenant_name: company,
+    const { error: bootstrapError } = await callRpc("bootstrap_owner_workspace", {
+      p_workspace_name: company,
       p_full_name: name,
     });
 

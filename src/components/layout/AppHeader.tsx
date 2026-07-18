@@ -24,7 +24,7 @@ function initials(name?: string | null, email?: string | null) {
 }
 
 export function AppHeader() {
-  const { profile, session, signOut } = useAuth();
+  const { member, session, signOut } = useAuth();
   const navigate = useNavigate();
 
   async function handleSignOut() {
@@ -52,13 +52,13 @@ export function AppHeader() {
           <DropdownMenuTrigger asChild>
             <button className="rounded-full outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring">
               <Avatar className="h-8 w-8">
-                <AvatarFallback>{initials(profile?.name, session?.user.email)}</AvatarFallback>
+                <AvatarFallback>{initials(member?.name, session?.user.email)}</AvatarFallback>
               </Avatar>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel className="truncate">
-              {profile?.name ?? session?.user.email}
+              {member?.name ?? session?.user.email}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut}>

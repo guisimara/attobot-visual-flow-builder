@@ -3,45 +3,45 @@ import type { Session } from "@supabase/supabase-js";
 import { supabase } from "./client";
 import type { Database } from "./types";
 
-export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+export type WorkspaceMember = Database["public"]["Tables"]["workspace_members"]["Row"];
 
 interface AuthState {
   session: Session | null;
-  profile: Profile | null;
+  member: WorkspaceMember | null;
   loading: boolean;
 }
 
 interface AuthContextValue extends AuthState {
   signOut: () => Promise<void>;
-  refreshProfile: () => Promise<void>;
+  refreshMember: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-async function loadProfile(userId: string): Promise<Profile | null> {
-  const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).maybeSingle();
+async function loadMember(userId: string): Promise<WorkspaceMember | null> {
+  const { data, error } = await supabase.from("workspace_members").select("*").eq("user_id", userId).maybeSingle();
   if (error) {
     // eslint-disable-next-line no-console
-    console.error("[auth] failed to load profile", error);
+    console.error("[auth] failed to load workspace member", error);
     return null;
   }
   return data;
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<AuthState>({ session: null, profile: null, loading: true });
+  const [state, setState] = useState<AuthState>({ session: null, member: null, loading: true });
 
   useEffect(() => {
     let mounted = true;
 
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      const profile = session ? await loadProfile(session.user.id) : null;
-      if (mounted) setState({ session, profile, loading: false });
+      const member = session ? await loadMember(session.user.id) : null;
+      if (mounted) setState({ session, member, loading: false });
     });
 
     const { data: subscription } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      const profile = session ? await loadProfile(session.user.id) : null;
-      if (mounted) setState({ session, profile, loading: false });
+      const member = session ? await loadMember(session.user.id) : null;
+      if (mounted) setState({ session, member, loading: false });
     });
 
     return () => {
@@ -54,19 +54,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut();
   }
 
-  async function refreshProfile() {
+  async function refreshMember() {
     setState((s) => {
       if (!s.session) return s;
       return s;
     });
     const userId = state.session?.user.id;
     if (!userId) return;
-    const profile = await loadProfile(userId);
-    setState((s) => ({ ...s, profile }));
+    const member = await loadMember(userId);
+    setState((s) => ({ ...s, member }));
   }
 
   return (
-    <AuthContext.Provider value={{ ...state, signOut, refreshProfile }}>
+    <AuthContext.Provider value={{ ...state, signOut, refreshMember }}>
       {children}
     </AuthContext.Provider>
   );
